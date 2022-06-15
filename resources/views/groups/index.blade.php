@@ -2,6 +2,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Lists') }}
+            <a href="{{ route('dashboard.group.create') }}" class="ml-2">+</a>
         </h2>
     </x-slot>
 
@@ -16,13 +17,13 @@
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
-                                        Name
+                                        {{ __('Name') }}
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        No. of People
+                                        {{ __('No. of People') }}
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        <span class="sr-only">Edit</span>
+                                        <span class="sr-only">{{ __('Show') }}</span>
                                     </th>
                                 </tr>
                                 </thead>
@@ -37,7 +38,7 @@
                                             {{ $group->people()->count() }}
                                         </td>
                                         <td class="px-6 py-4 text-right">
-                                            <a href="{{ route('dashboard.group.show', ['id' => $group->id]) }}" class="font-medium text-blue-600 hover:underline">Edit</a>
+                                            <a href="{{ route('dashboard.group.show', ['group' => $group->id]) }}" class="font-medium text-blue-600 hover:underline">{{ __('Show') }}</a>
                                         </td>
                                     </tr>
                                 @endforeach

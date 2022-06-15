@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -17,6 +18,8 @@ class HomeController extends Controller
      */
     public function index(Request $request): View
     {
-        return view('home');
+        $posts = Post::with('account', 'account.person', 'account.person.groups')->limit(30)->get();
+
+        return view('home', compact('posts'));
     }
 }

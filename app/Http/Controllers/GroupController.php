@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\Person;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -26,7 +28,9 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        $people = Person::all();
+
+        return view('groups.create', compact('people'));
     }
 
     /**
@@ -37,7 +41,21 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'group-name' => 'string|max:255',
+            'attached-people' => 'array'
+        ]);
+
+        $group = new Group();
+        $attached_people = $request->input('attached-people');
+        $group->name = $request->input('group-name');
+        $group->save();
+
+        array_walk($attached_people, function($id) use ($group) {
+            $group->people()->attach($id);
+        });
+
+        return redirect(route('dashboard.group.index'));
     }
 
     /**
@@ -48,7 +66,13 @@ class GroupController extends Controller
      */
     public function show($id)
     {
-        //
+        $group = Group::whereId($id)->with('people')->first();
+
+        if (null === $group) {
+            return abort(JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        return view('groups.show', compact('group'));
     }
 
     /**
@@ -82,6 +106,14 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $group = Group::whereId($id)->with('people')->first();
+
+        if (null === $group) {
+            return abort(JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $group->delete();
+
+        return redirect(route('dashboard.group.index'));
     }
 }

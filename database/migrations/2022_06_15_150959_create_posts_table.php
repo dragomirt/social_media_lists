@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer("account_id")->unsigned();
             $table->string("url")->nullable();
             $table->text("content")->nullable();
+            $table->dateTime("posted_at")->nullable();
 
             $table->timestamps();
             $table->softDeletes();

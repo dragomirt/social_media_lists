@@ -19,7 +19,8 @@ class PostFactory extends Factory
         return [
             'account_id' => null,
             'url' => $this->faker->url,
-            'content' => $this->faker->text(140)
+            'content' => $this->faker->text(140),
+            'posted_at' => $this->faker->dateTime
         ];
     }
 }
