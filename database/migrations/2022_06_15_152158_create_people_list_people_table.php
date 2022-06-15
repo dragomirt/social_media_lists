@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('person_list_person', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('person_list_id')->unsigned();
+            $table->integer('people_list_id')->unsigned();
             $table->integer('person_id')->unsigned();
 
             $table->timestamps();
