@@ -20,8 +20,8 @@ class Person extends Model
         return $this->hasMany(Account::class);
     }
 
-    public function lists(): BelongsToMany
+    public function groups(): BelongsToMany
     {
-        return $this->belongsToMany(PeopleList::class, 'people_list_people');
+        return $this->belongsToMany(Group::class, 'group_people');
     }
 }

@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use App\Enum\NetworksEnum;
 use App\Models\Account;
-use App\Models\PeopleList;
+use App\Models\Group;
 use App\Models\Person;
 use Tests\TestCase;
 
@@ -29,17 +29,17 @@ class PersonTest extends TestCase
         $this->assertEquals("dragomir_twitter", $person->accounts->first()->handle);
     }
 
-    public function test_can_have_lists()
+    public function test_can_have_groups()
     {
         $person = Person::factory()->create(['name' => 'Dragomir']);
 
-        $list = PeopleList::factory()->create([
+        $group = Group::factory()->create([
             'name' => 'test list'
         ]);
 
-        $list->people()->attach($person);
+        $group->people()->attach($person);
 
-        $this->assertCount(1, $person->lists);
-        $this->assertEquals("test list", $person->lists->first()->name);
+        $this->assertCount(1, $person->groups);
+        $this->assertEquals("test list", $person->groups->first()->name);
     }
 }
