@@ -22,6 +22,6 @@ class Person extends Model
 
     public function lists(): BelongsToMany
     {
-        return $this->belongsToMany(PeopleList::class, 'person_list_person');
+        return $this->belongsToMany(PeopleList::class, 'people_list_people');
     }
 }
