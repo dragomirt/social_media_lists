@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('list_person', function (Blueprint $table) {
+        Schema::create('person_list_person', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('person_list_id');
-            $table->unsignedInteger('person_id');
+            $table->integer('person_list_id')->unsigned();
+            $table->integer('person_id')->unsigned();
 
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('list_person');
+        Schema::dropIfExists('person_list_person');
     }
 };

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('person_id');
+            $table->integer('person_id')->unsigned();
             $table->string('network');
             $table->string('handle');
 

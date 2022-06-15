@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger("account_id");
+            $table->integer("account_id")->unsigned();
             $table->string("url")->nullable();
             $table->text("content")->nullable();
 
