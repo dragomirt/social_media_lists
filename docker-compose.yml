@@ -12,6 +12,24 @@ services:
         depends_on:
             - db
 
+    composer:
+        image: composer:2.3
+        platform: linux/arm64/v8
+        volumes:
+            - './:/app'
+        depends_on:
+            - php
+
+    node:
+        image: node:lts-alpine
+        platform: linux/arm64/v8
+        user: "node"
+        working_dir: "/home/app"
+        volumes:
+            - '.:/home/app'
+        environment:
+            - NODE_ENV=development
+
     nginx:
         container_name: nginx
         image: nginx:stable-alpine
