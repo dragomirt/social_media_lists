@@ -18,22 +18,95 @@
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
+                        <a href="{{ route('dashboard.group.index') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
                     @endauth
                 </div>
             @endif
 
-            <div class="w-full bg-white mx-auto sm:px-6 lg:px-8 gap-2 flex flex-col shadow">
-                <p class="p-6">Total posts: {{ $posts->count() }}</p>
+            <div class="max-w-4xl w-full mx-auto sm:px-6 lg:px-8 gap-2 flex flex-col mt-7">
+                <div tabindex="0" class="focus:outline-none bg-white p-6 shadow rounded">
+                    <div class="flex items-center pb-3">
+                        <div class="flex items-start justify-between w-full">
+                            <div class="pl-3 w-full flex flex-col gap-3">
+                                <p>Total posts: {{ $posts->count() }}</p>
+
+                                <div>
+                                    <div class="grid grid-cols-3 gap-6">
+                                        <div class="col-span-3 sm:col-span-2">
+                                            <label for="group-name" class="block text-sm font-medium text-gray-500">List Name</label>
+                                            <select class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                                                    name="group-name" id="group-name">
+                                                <option value="">Select group</option>
+                                                @foreach($groups as $group)
+                                                    <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="grid grid-cols-3 gap-6">
+                                        <div class="col-span-3 sm:col-span-2">
+                                            <label for="network" class="block text-sm font-medium text-gray-500">Network</label>
+                                            <select class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                                                    name="network" id="network">
+                                                <option value="">Select Network</option>
+                                                @foreach($networks as $network)
+                                                    <option value="{{ $network->value }}">{{ $network->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-6">
+                                    <div>
+                                        <div class="col-span-3 sm:col-span-2">
+                                            <label for="network" class="block text-sm font-medium text-gray-500">Posted After</label>
+                                            <div class="mt-1 relative rounded-md shadow-sm">
+                                                <input type="date" name="posted_after" id="posted_after"
+                                                          class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="col-span-3 sm:col-span-2">
+                                            <label for="network" class="block text-sm font-medium text-gray-500">Posted Before</label>
+                                            <div class="mt-1 relative rounded-md shadow-sm">
+                                                <input type="date" name="posted_before" id="posted_before"
+                                                       class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="grid grid-cols-3 gap-6">
+                                        <div class="col-span-3 sm:col-span-2">
+                                            <label for="network" class="block text-sm font-medium text-gray-500">Text</label>
+                                            <div class="mt-1 relative rounded-md shadow-sm">
+                                                <textarea type="text" name="content" id="content"
+                                                          class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">asdfasf</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="text-left">
+                                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">{{ __('Filter') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 gap-2 flex flex-col">
+            <div class="max-w-4xl w-full mx-auto sm:px-6 lg:px-8 gap-2 flex flex-col">
 
                 @foreach($posts as $post)
                     <div tabindex="0" class="focus:outline-none bg-white p-6 shadow rounded">
