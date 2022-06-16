@@ -30,8 +30,6 @@
                     <div class="flex items-center pb-3">
                         <div class="flex items-start justify-between w-full">
                             <div class="pl-3 w-full flex flex-col gap-3">
-                                <p>Total posts: {{ $posts->count() }}</p>
-
                                 <form class="flex flex-col gap-3" action="{{ route('home') }}" method="GET">
                                     <div>
                                         <div class="grid grid-cols-3 gap-6">
@@ -94,8 +92,11 @@
 
                                     <div class="text-left">
                                         <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">{{ __('Filter') }}</button>
+                                        <a type="button" href="{{ route("home") }}" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">{{ __('Clear') }}</a>
                                     </div>
                                 </form>
+
+                                <div class="mt-3">{{ $posts->links() }}</div>
                             </div>
                         </div>
                     </div>

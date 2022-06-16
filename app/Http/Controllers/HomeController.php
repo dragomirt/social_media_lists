@@ -36,7 +36,7 @@ class HomeController extends Controller
             ->byContent(self::getFilterContent($request))
             ->byDates(self::getFilterFromDate($request), self::getFilterToDate($request));
 
-        $posts = $filter_service->getQuery()->get();
+        $posts = $filter_service->getQuery()->paginate(100);
         return view('home', compact('posts', 'groups', 'networks'));
     }
 
