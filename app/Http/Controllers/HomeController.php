@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Services\PostFilterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -26,12 +27,14 @@ class HomeController extends Controller
         $groups = Group::all();
         $networks = NetworksEnum::cases();
 
-        $query = Post::with('account', 'account.person', 'account.person.groups')
-            ->limit(30);
+        $query = Post::with('account', 'account.person', 'account.person.groups');
 
         $filter_service = new PostFilterService($query);
         $filter_service
-            ->byNetwork(self::getFilterNetworks($request));
+            ->byNetwork(self::getFilterNetworks($request))
+            ->byGroup(self::getFilterGroups($request))
+            ->byContent(self::getFilterContent($request))
+            ->byDates(self::getFilterFromDate($request), self::getFilterToDate($request));
 
         $posts = $filter_service->getQuery()->get();
         return view('home', compact('posts', 'groups', 'networks'));
@@ -49,5 +52,63 @@ class HomeController extends Controller
             collect($request->get('filter_networks'))->filter(function($x) {
                 return null !== $x;
             }) : null;
+    }
+
+    /**
+     * Returns the groups from the get parameters
+     *
+     * @param Request $request
+     * @return Collection
+     */
+    protected static function getFilterGroups(Request $request): ?Collection
+    {
+        return $request->get('filter_groups') ? // is the parameter set?
+            collect($request->get('filter_groups'))->filter(function($x) {
+                return null !== $x;
+            }) : null;
+    }
+
+    /**
+     * Returns the content from the get parameters
+     *
+     * @param Request $request
+     * @return Collection
+     */
+    protected static function getFilterContent(Request $request): ?string
+    {
+        $content = $request->get('filter_content');
+
+        if (null === $content) {
+            return null;
+        }
+
+        $content = Str::limit(500, htmlspecialchars(trim($content)));
+        if ("" === $content) {
+            return null;
+        }
+
+        return $content;
+    }
+
+    /**
+     * Returns the from date from the get parameters
+     *
+     * @param Request $request
+     * @return Collection
+     */
+    protected static function getFilterFromDate(Request $request): ?string
+    {
+        return $request->get('filter_from');
+    }
+
+    /**
+     * Returns the from date from the get parameters
+     *
+     * @param Request $request
+     * @return Collection
+     */
+    protected static function getFilterToDate(Request $request): ?string
+    {
+        return $request->get('filter_to');
     }
 }

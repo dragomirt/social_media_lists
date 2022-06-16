@@ -112,7 +112,8 @@ class PostFilterService
 
         if (null !== $from) {
             try {
-                $this->query = $this->query->whereDate('posted_at', '>=', Carbon::parse($from));
+                $from_date = Carbon::parse($from);
+                $this->query = $this->query->whereDate('posted_at', '>=', $from_date);
             } catch (InvalidFormatException $exception) {
                 //
             }
@@ -120,7 +121,8 @@ class PostFilterService
 
         if (null !== $to) {
             try {
-                $this->query = $this->query->whereDate('posted_at', '<=', Carbon::parse($to));
+                $to_date = Carbon::parse($to);
+                $this->query = $this->query->whereDate('posted_at', '<=', $to_date);
             } catch (InvalidFormatException $exception) {
                 //
             }

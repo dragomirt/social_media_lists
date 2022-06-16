@@ -36,9 +36,10 @@
                                     <div>
                                         <div class="grid grid-cols-3 gap-6">
                                             <div class="col-span-3 sm:col-span-2">
-                                                <label for="group-name" class="block text-sm font-medium text-gray-500">List(s)</label>
+                                                <label for="filter_groups[]" class="block text-sm font-medium text-gray-500">List(s)</label>
                                                 @foreach($groups as $group)
-                                                    <input type="checkbox" name="filter_group[]" value="{{$group->id}}"> {{ $group->name }}
+                                                    <input type="checkbox" name="filter_groups[]" value="{{$group->id}}"
+                                                        {{ collect(app('request')->input("filter_groups"))->contains($group->id) ? 'checked' : ''  }}> {{ $group->name }}
                                                 @endforeach
                                             </div>
                                         </div>
@@ -49,7 +50,8 @@
                                             <div class="col-span-3 sm:col-span-2">
                                                 <label for="network" class="block text-sm font-medium text-gray-500">Network(s)</label>
                                                 @foreach($networks as $network)
-                                                    <input type="checkbox" name="filter_networks[]" value="{{$network->value}}"> {{ $network->name }}
+                                                    <input type="checkbox" name="filter_networks[]" value="{{$network->value}}"
+                                                        {{ collect(app('request')->input("filter_networks"))->contains($network->value) ? 'checked' : ''  }}> {{ $network->name }}
                                                 @endforeach
                                             </div>
                                         </div>
@@ -60,7 +62,7 @@
                                             <div class="col-span-3 sm:col-span-2">
                                                 <label for="filter_from" class="block text-sm font-medium text-gray-500">Posted After</label>
                                                 <div class="mt-1 relative rounded-md shadow-sm">
-                                                    <input type="date" name="filter_from" id="filter_from"
+                                                    <input type="date" name="filter_from" id="filter_from" value="{{ app('request')->input("filter_from") }}"
                                                               class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
                                                 </div>
                                             </div>
@@ -70,7 +72,7 @@
                                             <div class="col-span-3 sm:col-span-2">
                                                 <label for="filter_to" class="block text-sm font-medium text-gray-500">Posted Before</label>
                                                 <div class="mt-1 relative rounded-md shadow-sm">
-                                                    <input type="date" name="filter_to" id="filter_to"
+                                                    <input type="date" name="filter_to" id="filter_to" value="{{ app('request')->input("filter_to") }}"
                                                            class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
                                                 </div>
                                             </div>
@@ -82,8 +84,8 @@
                                             <div class="col-span-3 sm:col-span-2">
                                                 <label for="filter_content" class="block text-sm font-medium text-gray-500">Text</label>
                                                 <div class="mt-1 relative rounded-md shadow-sm">
-                                                    <textarea type="text" name="filter_content" id="filter_content"
-                                                              class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">asdfasf</textarea>
+                                                    <textarea type="text" name="filter_content" id="filter_content" maxlength="500"
+                                                              class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">{{ app('request')->input("filter_content") }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
