@@ -27,6 +27,7 @@ class HomeController extends Controller
         $groups = Group::all();
         $networks = NetworksEnum::cases();
 
+        $begin = microtime(true); // log the duration of the query
         $query = Post::with('account', 'account.person', 'account.person.groups');
 
         $filter_service = new PostFilterService($query);
@@ -37,7 +38,9 @@ class HomeController extends Controller
             ->byDates(self::getFilterFromDate($request), self::getFilterToDate($request));
 
         $posts = $filter_service->getQuery()->paginate(100);
-        return view('home', compact('posts', 'groups', 'networks'));
+        $query_time = (microtime(true) - $begin) * 1000; // convert seconds to ms
+
+        return view('home', compact('posts', 'groups', 'networks', 'query_time'));
     }
 
     /**
@@ -82,7 +85,7 @@ class HomeController extends Controller
             return null;
         }
 
-        $content = Str::limit(500, htmlspecialchars(trim($content)));
+        $content = Str::limit(htmlspecialchars(trim($content)), 500, '');
         if ("" === $content) {
             return null;
         }

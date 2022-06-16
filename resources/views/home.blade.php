@@ -30,6 +30,7 @@
                     <div class="flex items-center pb-3">
                         <div class="flex items-start justify-between w-full">
                             <div class="pl-3 w-full flex flex-col gap-3">
+                                <p>Query Time: <b>{{ round($query_time, 3) }} ms</b></p>
                                 <form class="flex flex-col gap-3" action="{{ route('home') }}" method="GET">
                                     <div>
                                         <div class="grid grid-cols-3 gap-6">
