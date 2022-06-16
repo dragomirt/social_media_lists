@@ -32,66 +32,68 @@
                             <div class="pl-3 w-full flex flex-col gap-3">
                                 <p>Total posts: {{ $posts->count() }}</p>
 
-                                <div>
-                                    <div class="grid grid-cols-3 gap-6">
-                                        <div class="col-span-3 sm:col-span-2">
-                                            <label for="group-name" class="block text-sm font-medium text-gray-500">List(s)</label>
-                                            @foreach($groups as $group)
-                                                <input type="checkbox" name="filter_group[]" value="{{$group->id}}"> {{ $group->name }}
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div class="grid grid-cols-3 gap-6">
-                                        <div class="col-span-3 sm:col-span-2">
-                                            <label for="network" class="block text-sm font-medium text-gray-500">Network(s)</label>
-                                            @foreach($networks as $network)
-                                                <input type="checkbox" name="filter_networks[]" value="{{$network->value}}"> {{ $network->name }}
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="grid grid-cols-3 gap-6">
+                                <form class="flex flex-col gap-3" action="{{ route('home') }}" method="GET">
                                     <div>
-                                        <div class="col-span-3 sm:col-span-2">
-                                            <label for="filter_from" class="block text-sm font-medium text-gray-500">Posted After</label>
-                                            <div class="mt-1 relative rounded-md shadow-sm">
-                                                <input type="date" name="filter_from" id="filter_from"
-                                                          class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
+                                        <div class="grid grid-cols-3 gap-6">
+                                            <div class="col-span-3 sm:col-span-2">
+                                                <label for="group-name" class="block text-sm font-medium text-gray-500">List(s)</label>
+                                                @foreach($groups as $group)
+                                                    <input type="checkbox" name="filter_group[]" value="{{$group->id}}"> {{ $group->name }}
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
 
                                     <div>
-                                        <div class="col-span-3 sm:col-span-2">
-                                            <label for="filter_to" class="block text-sm font-medium text-gray-500">Posted Before</label>
-                                            <div class="mt-1 relative rounded-md shadow-sm">
-                                                <input type="date" name="filter_to" id="filter_to"
-                                                       class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
+                                        <div class="grid grid-cols-3 gap-6">
+                                            <div class="col-span-3 sm:col-span-2">
+                                                <label for="network" class="block text-sm font-medium text-gray-500">Network(s)</label>
+                                                @foreach($networks as $network)
+                                                    <input type="checkbox" name="filter_networks[]" value="{{$network->value}}"> {{ $network->name }}
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div>
                                     <div class="grid grid-cols-3 gap-6">
-                                        <div class="col-span-3 sm:col-span-2">
-                                            <label for="filter_content" class="block text-sm font-medium text-gray-500">Text</label>
-                                            <div class="mt-1 relative rounded-md shadow-sm">
-                                                <textarea type="text" name="filter_content" id="filter_content"
-                                                          class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">asdfasf</textarea>
+                                        <div>
+                                            <div class="col-span-3 sm:col-span-2">
+                                                <label for="filter_from" class="block text-sm font-medium text-gray-500">Posted After</label>
+                                                <div class="mt-1 relative rounded-md shadow-sm">
+                                                    <input type="date" name="filter_from" id="filter_from"
+                                                              class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div class="col-span-3 sm:col-span-2">
+                                                <label for="filter_to" class="block text-sm font-medium text-gray-500">Posted Before</label>
+                                                <div class="mt-1 relative rounded-md shadow-sm">
+                                                    <input type="date" name="filter_to" id="filter_to"
+                                                           class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+
+                                    <div>
+                                        <div class="grid grid-cols-3 gap-6">
+                                            <div class="col-span-3 sm:col-span-2">
+                                                <label for="filter_content" class="block text-sm font-medium text-gray-500">Text</label>
+                                                <div class="mt-1 relative rounded-md shadow-sm">
+                                                    <textarea type="text" name="filter_content" id="filter_content"
+                                                              class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md">asdfasf</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
 
-                                <div class="text-left">
-                                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">{{ __('Filter') }}</button>
-                                </div>
+                                    <div class="text-left">
+                                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">{{ __('Filter') }}</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

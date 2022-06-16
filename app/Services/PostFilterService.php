@@ -12,6 +12,11 @@ class PostFilterService
 {
     protected ?Builder $query = null;
 
+    /**
+     * Based on the Builder pattern, well suited for chaining.
+     *
+     * @param Builder $query
+     */
     public function __construct(Builder $query)
     {
         $this->query = $query;
@@ -22,13 +27,19 @@ class PostFilterService
         return $this->query;
     }
 
+    /**
+     * Filters by group using ids.
+     *
+     * @param Collection|null $group_ids
+     * @return $this
+     */
     public function byGroup(?Collection $group_ids = null): self
     {
         if (null === $this->query) {
             return $this;
         }
 
-        if (null === $group_ids) {
+        if (null === $group_ids || $group_ids->isEmpty()) {
             return $this;
         }
 
@@ -40,13 +51,19 @@ class PostFilterService
         return $this;
     }
 
+    /**
+     * Filters by network.
+     *
+     * @param Collection|null $networks
+     * @return $this
+     */
     public function byNetwork(?Collection $networks = null): self
     {
         if (null === $this->query) {
             return $this;
         }
 
-        if (null === $networks) {
+        if (null === $networks || $networks->isEmpty()) {
             return $this;
         }
 
@@ -58,6 +75,12 @@ class PostFilterService
         return $this;
     }
 
+    /**
+     * Filters content using the like function. Text is sanitized.
+     *
+     * @param string|null $text
+     * @return $this
+     */
     public function byContent(?string $text = null): self
     {
         if (null === $this->query) {
@@ -74,6 +97,13 @@ class PostFilterService
         return $this;
     }
 
+    /**
+     * Filters posts by form and to range.
+     *
+     * @param string|null $from
+     * @param string|null $to
+     * @return $this
+     */
     public function byDates(?string $from = null, ?string $to = null): self
     {
         if (null === $this->query) {

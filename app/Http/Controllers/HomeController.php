@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Enum\NetworksEnum;
 use App\Models\Group;
 use App\Models\Post;
+use App\Services\PostFilterService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -23,8 +25,29 @@ class HomeController extends Controller
 
         $groups = Group::all();
         $networks = NetworksEnum::cases();
-        $posts = Post::with('account', 'account.person', 'account.person.groups')->limit(30)->get();
 
+        $query = Post::with('account', 'account.person', 'account.person.groups')
+            ->limit(30);
+
+        $filter_service = new PostFilterService($query);
+        $filter_service
+            ->byNetwork(self::getFilterNetworks($request));
+
+        $posts = $filter_service->getQuery()->get();
         return view('home', compact('posts', 'groups', 'networks'));
+    }
+
+    /**
+     * Returns the networks from the get parameters
+     *
+     * @param Request $request
+     * @return Collection
+     */
+    protected static function getFilterNetworks(Request $request): ?Collection
+    {
+        return $request->get('filter_networks') ? // is the parameter set?
+            collect($request->get('filter_networks'))->filter(function($x) {
+                return null !== $x;
+            }) : null;
     }
 }
