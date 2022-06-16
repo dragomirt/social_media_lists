@@ -35,14 +35,10 @@
                                 <div>
                                     <div class="grid grid-cols-3 gap-6">
                                         <div class="col-span-3 sm:col-span-2">
-                                            <label for="group-name" class="block text-sm font-medium text-gray-500">List Name</label>
-                                            <select class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
-                                                    name="group-name" id="group-name">
-                                                <option value="">Select group</option>
-                                                @foreach($groups as $group)
-                                                    <option value="{{ $group->id }}">{{ $group->name }}</option>
-                                                @endforeach
-                                            </select>
+                                            <label for="group-name" class="block text-sm font-medium text-gray-500">List(s)</label>
+                                            @foreach($groups as $group)
+                                                <input type="checkbox" name="filter_group[]" value="{{$group->id}}"> {{ $group->name }}
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -50,14 +46,10 @@
                                 <div>
                                     <div class="grid grid-cols-3 gap-6">
                                         <div class="col-span-3 sm:col-span-2">
-                                            <label for="network" class="block text-sm font-medium text-gray-500">Network</label>
-                                            <select class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
-                                                    name="network" id="network">
-                                                <option value="">Select Network</option>
-                                                @foreach($networks as $network)
-                                                    <option value="{{ $network->value }}">{{ $network->name }}</option>
-                                                @endforeach
-                                            </select>
+                                            <label for="network" class="block text-sm font-medium text-gray-500">Network(s)</label>
+                                            @foreach($networks as $network)
+                                                <input type="checkbox" name="filter_networks[]" value="{{$network->value}}"> {{ $network->name }}
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
