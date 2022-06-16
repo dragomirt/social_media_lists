@@ -6,4 +6,5 @@ enum NetworksEnum: string
 {
     case FACEBOOK = "facebook";
     case TWITTER = "twitter";
+    case INSTAGRAM = "instagram";
 }
