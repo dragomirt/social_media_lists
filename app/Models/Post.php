@@ -12,6 +12,7 @@ class Post extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $casts = ['posted_at' => 'date'];
     protected $fillable = ["account_id", "url", "content", 'posted_at'];
 
     public function account(): BelongsTo
